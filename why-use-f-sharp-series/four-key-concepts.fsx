@@ -42,8 +42,39 @@ let z = BoolChoice false
 type Complex = float * float
 type ComplexComparisonFunction = Complex -> Complex -> int
 
+//Pattern matching for flow of control
+(*
+Most imperative languages offer a variety of control flow statements for branching and looping:
 
+    if-then-else (and the ternary version bool ? if-true : if-false)
+    case or switch statements
+    for and foreach loops, with break and continue
+    while and until loops
+    and even the dreaded goto
 
+F# does support some of these, but F# also supports the most general form of conditional expression, which is pattern-matching.
 
+A typical matching expression that replaces if-then-else looks like this:
+*)
 
+//Pattern Matching with union types
+type Shape =
+    | Circle of radius:int
+    | Rectangle of height:int * width:int
+    | Point of x:int * y:int
+    | Polygon of pointList:(int * int) list
 
+let draw shape = 
+ match shape with    
+    | Circle radius ->
+        printfn "The Circle had raduis of %d" radius
+    | Rectangle (height ,width)->
+        printfn "The Rectangle is %d high by %d wide" height width
+    | Polygon points->
+        printfn "The Polygon is made of these points %A" points
+    | _ -> printfn "I don't recognize this shape"
+let circle = Circle 10
+let rect = Rectangle(4,5)
+let point = Point(2,3)
+let polygon = Polygon([(1,2);(2,2);(3,3)])
+[circle;rect;polygon;point] |> List.iter draw
