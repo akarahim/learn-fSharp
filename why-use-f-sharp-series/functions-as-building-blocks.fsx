@@ -16,3 +16,18 @@ add2ThenMult3 5
 mult3ThenSquare 5
 [1..10] |> List.map add2ThenMult3 |> printfn "%A"
 [1..10] |> List.map mult3ThenSquare |> printfn "%A"
+
+//extending existing functions
+let logMsg msg x= printf "%s%i" msg x ;x
+let logMsgN msg x= printfn "%s%i" msg x ;x
+
+//new composed functions with new improved logging
+let mult3ThenSquareLogged =
+    logMsg "before=" 
+    >> mult3
+    >> logMsg " after mult3="
+    >> square
+    >> logMsgN  " result"
+
+mult3ThenSquareLogged 5
+[1..10] |> List.map mult3ThenSquareLogged
